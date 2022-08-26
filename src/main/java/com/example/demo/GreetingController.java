@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.sql.SQLException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class GreetingController {
+
+	Database db = new Database();
 
 	@GetMapping("/greeting")
 	public String greetingForm(Model model) {
@@ -46,10 +50,13 @@ public class GreetingController {
 		return "signup";
 	}
 	@PostMapping("/signup")
-	public String signupSubmit(@ModelAttribute Signup signup, Model model) {
-		String name = signup.getFirstName();
+	public String signupSubmit(@ModelAttribute Signup signup, Model model) throws SQLException {
+		String phonenumber = signup.getPhoneNumber();
+		String first_name = signup.getFirstName();
+		String last_name = signup.getLastName();
+		String password = signup.getPassword();
 		model.addAttribute("signup", signup);
-		System.out.println("printing signup: " + name);
+		db.Insert(phonenumber, first_name, last_name, password);
 		return "signup";
 	}
 	
