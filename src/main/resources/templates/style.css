@@ -1,0 +1,19 @@
+body {
+    background-color: coral;
+}
+.color-primary{
+    color: #003859
+}
+.color-primary-bg{
+    background: #003859
+}
+.color-second{
+    color: #00A5C4
+}
+.color-second-bg{
+    background: #00A5C4
+}
+.card-body{
+    background: #00A5C4;
+    border-radius: 10px;
+}
