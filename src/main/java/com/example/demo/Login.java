@@ -2,23 +2,22 @@ package com.example.demo;
 
 public class Login {
 
-	private long id;
-	private String content;
+	private String phoneNumber;
+    private String password;
 
-	public long getId() {
-		return id;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+    public String getPassword() {
+		return password;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

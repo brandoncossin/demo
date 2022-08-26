@@ -19,12 +19,12 @@ public class GreetingController {
 	@PostMapping("/greeting")
 	public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) {
 		model.addAttribute("greeting", greeting);
-		System.out.println("printing");
-
+		String name = greeting.getContent();
+		System.out.println("printing" + name);
 		return "greeting";
 	}
 
-    @GetMapping("/login")
+	@GetMapping("/login")
 	public String loginForm(Model model) {
 		model.addAttribute("login", new Login());
 		System.out.println("printing");
@@ -33,10 +33,11 @@ public class GreetingController {
 
 	@PostMapping("/login")
 	public String loginSubmit(@ModelAttribute Login login, Model model) {
-		model.addAttribute("loginPage", login);
-		System.out.println("printing");
+		String name = login.getPhoneNumber();
+		model.addAttribute("login", login);
+		System.out.println("printing" + name);
 
-		return "loginPage";
+		return "login";
 	}
 	@GetMapping("/signup")
 	public String signupForm(Model model) {
@@ -45,9 +46,10 @@ public class GreetingController {
 		return "signup";
 	}
 	@PostMapping("/signup")
-	public String signupSubmit(Model model) {
-		model.addAttribute("signup", new Signup());
-		System.out.println("printing signup");
+	public String signupSubmit(@ModelAttribute Signup signup, Model model) {
+		String name = signup.getFirstName();
+		model.addAttribute("signup", signup);
+		System.out.println("printing signup: " + name);
 		return "signup";
 	}
 	
