@@ -3,6 +3,8 @@ package com.example.demo;
 import java.sql.*;
 import java.util.*;
 
+import com.mysql.cj.xdevapi.Result;
+
 public class Database {
 
     public void CreateDB() throws SQLException {
@@ -71,6 +73,18 @@ public class Database {
         preparedStmt.setString(3, z);
         preparedStmt.setString(4, p);
         preparedStmt.executeUpdate();
+    }
+
+    public void LoginQ(String x, String y) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://localhost:3306";
+        Connection con = DriverManager.getConnection(mysqlUrl, "root", "password");
+        String SelectQ = "SELECT * FROM eCommerceDB.customers WHERE phone_number=? AND password=?;";
+        PreparedStatement preparedStmt = con.prepareStatement(SelectQ);
+        preparedStmt.setString(1, x);
+        preparedStmt.setString(2, y);
+        preparedStmt.executeQuery();
     }
 
     public void testInsert() throws SQLException {
