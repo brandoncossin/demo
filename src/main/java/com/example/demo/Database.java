@@ -91,6 +91,21 @@ public class Database {
 
     }
 
+    public void getAll() throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
+        String SelectQ = "SELECT * FROM items;";
+        PreparedStatement preparedStmt = con.prepareStatement(SelectQ);
+        ResultSet rs = preparedStmt.executeQuery();
+        while (rs.next()) {
+            String name = rs.getString("name");
+            int price = rs.getInt("price");
+            String path = rs.getString("path");
+        }
+    }
+
     public boolean login(String username, String password) throws SQLException {
         ResultSet result = Validated(username);
         boolean valid = false;
