@@ -33,8 +33,8 @@ public class Database {
             String[] user = new String[3];
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             //Getting the connection
-            String mysqlUrl = "jdbc:mysql://localhost";
-            Connection con = DriverManager.getConnection(mysqlUrl, "root", "password");
+            String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+            Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
             String query4 = "SELECT * FROM eCommerceDB.customers;";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query4);
@@ -51,7 +51,7 @@ public class Database {
     public void getName() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
-        String mysqlUrl = "jdbc:mysql://bsck.mysql.database.azure.com:3306?useSSL=true";
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
         Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
         String query4 = "SELECT * FROM Employee.employees;";
         Statement stmt = con.createStatement();
@@ -64,8 +64,8 @@ public class Database {
     public void Insert(String x, String y, String z, String p) throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
-        String mysqlUrl = "jdbc:mysql://localhost:3306";
-        Connection con = DriverManager.getConnection(mysqlUrl, "root", "password");
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
         String InsertQ = "INSERT INTO eCommerceDB.customers (phone_number,first_name,last_name, password) VALUES (?,?,?,?);";
         PreparedStatement preparedStmt = con.prepareStatement(InsertQ);
         preparedStmt.setString(1, x);
@@ -78,8 +78,8 @@ public class Database {
     public void LoginQ(String x, String y) throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
-        String mysqlUrl = "jdbc:mysql://localhost:3306";
-        Connection con = DriverManager.getConnection(mysqlUrl, "root", "password");
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password");
         String SelectQ = "SELECT * FROM eCommerceDB.customers WHERE phone_number=? AND password=?;";
         PreparedStatement preparedStmt = con.prepareStatement(SelectQ);
         preparedStmt.setString(1, x);
