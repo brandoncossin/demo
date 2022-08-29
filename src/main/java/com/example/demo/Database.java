@@ -112,6 +112,63 @@ public class Database {
         return valid;
     }
 
+    public void addToCart(int itemId, String user, int quantity) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
+        String InsertQ = "INSERT INTO eCommerceDB.cart (item_id, customers_phone_number, quantity) VALUES (?,?,?);";
+        PreparedStatement preparedStmt = con.prepareStatement(InsertQ);
+        preparedStmt.setInt(1, itemId);
+        preparedStmt.setString(2, user);
+        preparedStmt.setInt(3, quantity);
+        preparedStmt.executeUpdate();
+    }
+
+    public void removeItem(int itemId) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
+        String DeleteQ = "DELETE FROM eCommerceDB.cart WHERE item_id = ?;";
+        PreparedStatement preparedStmt = con.prepareStatement(DeleteQ);
+        preparedStmt.setInt(1, itemId);
+        preparedStmt.executeUpdate();
+    }
+
+    public void updateCart(int itemId, int quantity) throws SQLException {
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
+        String UpdateQ = "UPDATE eCommerceDB.cart SET quantity = ? WHERE item_id = ?;";
+        PreparedStatement preparedStmt = con.prepareStatement(UpdateQ);
+        preparedStmt.setInt(1, itemId);
+        preparedStmt.setInt(2, quantity);
+        preparedStmt.executeUpdate();
+    }
+
+    public int getSum(int itemId, String user) throws SQLException {
+        int sum = 0;
+        int price = 0;
+        int quantity = 0;
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        //Getting the connection
+        String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
+        String SELECTQ = "SELECT * FROM eCommerceDB.getSum WHERE item_id = ? AND phone_number = ?;";
+        PreparedStatement preparedStmt = con.prepareStatement(SELECTQ);
+        preparedStmt.setInt(1, itemId);
+        preparedStmt.setString(2, user);
+        ResultSet rs = preparedStmt.executeQuery();
+        while (rs.next()) {
+            price = rs.getInt("price");
+            quantity = rs.getInt("quantity");
+        }
+        sum = price * quantity;
+        return sum;
+    }
+
     public void testInsert() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
