@@ -3,6 +3,8 @@ package com.example.demo;
 import java.sql.*;
 import java.util.*;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import com.mysql.cj.xdevapi.Result;
 
 public class Database {
@@ -75,16 +77,39 @@ public class Database {
         preparedStmt.executeUpdate();
     }
 
-    public void LoginQ(String x, String y) throws SQLException {
+    public ResultSet Validated(String x) throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         //Getting the connection
         String mysqlUrl = "jdbc:mysql://shayne-brandon-server.mysql.database.azure.com:3306?useSSL=true";
-        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password");
-        String SelectQ = "SELECT * FROM eCommerceDB.customers WHERE phone_number=? AND password=?;";
+        Connection con = DriverManager.getConnection(mysqlUrl, "skanner", "Password12345");
+        String SelectQ = "SELECT * FROM eCommerceDB.customers WHERE phone_number=?";
         PreparedStatement preparedStmt = con.prepareStatement(SelectQ);
         preparedStmt.setString(1, x);
-        preparedStmt.setString(2, y);
-        preparedStmt.executeQuery();
+        ResultSet rs = preparedStmt.executeQuery();
+        System.out.println(rs);
+        return rs;
+
+    }
+
+    public boolean login(String username, String password) throws SQLException {
+        ResultSet result = Validated(username);
+        boolean valid = false;
+        if(result == null){
+            valid = false;
+        }
+        else{
+            while (result.next()) {
+                String pwd = result.getString("password");
+                if (BCrypt.checkpw(password, pwd)) {
+                    valid = true;
+                }
+                else {
+                    valid = false;
+                }
+            }
+        }
+        System.out.println(valid);
+        return valid;
     }
 
     public void testInsert() throws SQLException {

@@ -2,6 +2,9 @@ package com.example.demo;
 
 import java.sql.SQLException;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.*;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +39,11 @@ public class GreetingController {
 	}
 
 	@PostMapping("/login")
-	public String loginSubmit(@ModelAttribute Login login, Model model) {
-		String name = login.getPhoneNumber();
+	public String loginSubmit(@ModelAttribute Login login, Model model) throws SQLException {
+		String username = login.getPhoneNumber();
+		String password = login.getPassword();
 		model.addAttribute("login", login);
-		System.out.println("printing" + name);
-
+		db.login(username, password);
 		return "login";
 	}
 	@GetMapping("/signup")
@@ -55,8 +58,9 @@ public class GreetingController {
 		String first_name = signup.getFirstName();
 		String last_name = signup.getLastName();
 		String password = signup.getPassword();
+		String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt()).toString();
 		model.addAttribute("signup", signup);
-		db.Insert(phonenumber, first_name, last_name, password);
+		db.Insert(phonenumber, first_name, last_name, hashed_password);
 		return "signup";
 	}
 	
